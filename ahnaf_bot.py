@@ -1,5 +1,5 @@
 # ============================================================
-# 🔥 AHNAF'S SMS BOMBER v3.5
+# 🔥 AHNAF SMS BOMBER v3.5
 # Features: 45+ Providers, Daily Bonus, Premium, Leaderboard
 # Low = minimum 30+ SMS guaranteed!
 # Made by Ahnaf
@@ -197,7 +197,7 @@ def get_providers(phone_number):
         },
         {
             "name": "Snapp V2",
-            "url": "https://app.snapp.taxi/api/api/v1/sms/link",
+            "url": " "https://app.snapp.taxi/api/api/v1/sms/link",
             "method": "POST",
             "headers": {"Content-Type": "application/json"},
             "data": {"phone": local}
@@ -542,14 +542,14 @@ class AhnafBomber:
         self.running = False
 
 # ============================================================
-# TELEGRAM BOT
+# TELEGRAM BOT — FIXED IMPORT for Python 3.14 compatibility
 # ============================================================
 
 try:
     from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
     from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
 except ImportError:
-    os.system("pip install python-telegram-bot==20.7 requests flask gunicorn")
+    os.system("pip install python-telegram-bot==21.10 requests flask gunicorn")
     from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
     from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
 
@@ -1204,12 +1204,16 @@ def ping():
     return "pong", 200
 
 # ============================================================
-# MAIN
+# FIX: Run Flask only when NOT under gunicorn (to avoid port conflict)
 # ============================================================
 
 def run_flask():
     port = int(os.environ.get("PORT", 8080))
-    flask_app.run(host="0.0.0.0", port=port, debug=False)
+    flask_app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
+
+# ============================================================
+# MAIN
+# ============================================================
 
 if __name__ == "__main__":
     print(f"""
@@ -1227,9 +1231,12 @@ if __name__ == "__main__":
         print("📌 Get it from @BotFather")
         sys.exit(1)
     
-    flask_thread = threading.Thread(target=run_flask, daemon=True)
-    flask_thread.start()
-    print(f"✅ Web server: port {os.environ.get('PORT', 8080)}")
+    # FIX: Gunicorn already runs Flask on the port, so don't start another Flask
+    # Only start Flask thread if we're NOT being run by gunicorn
+    if not os.environ.get('GUNICORN_CMD_ARGS', ''):
+        flask_thread = threading.Thread(target=run_flask, daemon=True)
+        flask_thread.start()
+        print(f"✅ Web server: port {os.environ.get('PORT', 8080)}")
     
     app = Application.builder().token(BOT_TOKEN).build()
     
