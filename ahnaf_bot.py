@@ -1,5 +1,5 @@
 # ============================================================
-# 🔥 AHNAF SMS BOMBER v3.5
+# 🔥 AHNAF'S SMS BOMBER v3.5
 # Features: 45+ Providers, Daily Bonus, Premium, Leaderboard
 # Low = minimum 30+ SMS guaranteed!
 # Made by Ahnaf
