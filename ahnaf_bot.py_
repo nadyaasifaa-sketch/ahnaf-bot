@@ -16,9 +16,9 @@ from datetime import datetime, date, timedelta
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # ===== CONFIGURATION =====
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"       # @BotFather token
+BOT_TOKEN = "8996500921:AAHrQzeOVMjX_DUEgxv_mQfIA6LAHUnNFlE"       # @BotFather token
 ADMIN_USERNAME = "@g0dfvd"              # Your username
-ADMIN_USER_ID = 123456789               # Your Telegram ID
+ADMIN_USER_ID = 6409428385               # Your Telegram ID
 BOT_NAME = "𝐀𝐇𝐍𝐀𝐅 𝐁𝐎𝐓"
 BOT_MADE_BY = "Bot Made by Ahnaf 🤖"
 DB_FILE = "users.json"
